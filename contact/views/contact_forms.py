@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
 from contact.forms import ContactForm
 from contact.models import Contact
 
+@login_required(login_url='contact:login')
 
 def create(request):
     form_action = reverse('contact:create')
@@ -35,7 +37,8 @@ def create(request):
         'contact/create.html',
         context
     )
-    
+@login_required(login_url='contact:login')
+   
 def update(request, contact_id):
     contact = get_object_or_404(
         Contact, pk=contact_id, show=True
@@ -69,6 +72,9 @@ def update(request, contact_id):
         'contact/create.html',
         context
     )
+    
+@login_required(login_url='contact:login')
+
 def delete(request, contact_id):
     contact = get_object_or_404(
         Contact, pk=contact_id, show=True
